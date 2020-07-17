@@ -1,4 +1,4 @@
-# nRF52_shtc3
+# nRF52_shtc3: No Bluetooth api used, only for SHTC3 sensor communication
 
 ## Setting up Segger Embedded Studio for nRF52840 development
 
