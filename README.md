@@ -12,19 +12,19 @@
 ### Setup Segger Studio Environment
 1. Open Segger Embedded Studio we installed.
 2. Go to Tab **Tools->Building**, under **Build** look for **Global Macros**, insert the nRF5 SDK address to assign a variable to it. e.g.(*NRF52_SDK=C:/nRF5_SDK_15.3.0*)
-3. Now we can use this variable globally in our projects. ![Environment variable](images\env_var.png)
+3. Now we can use this variable globally in our projects. ![Environment variable](images/env_var.png)
 
 ### Creating nrf5 project
 1. Click on *Create New* project.
 2. If Nordic Semiconductors package is not installed, install it.
-3. Select C/C++ executable project, enter project name and location as shown. ![Environment variable](images\new_project.png)
-4. Click *Next*. Select **Target processor**. Enter settings as shown. e.g.(*nRF52840_xxAA*). Click *Next*.![Environment variable](images\project_set.png)
-5. Uncheck all folders. We will include them from SDK directly. Uncheck *Import all files and package files*.![Environment variable](images\addInitFiles.png)
+3. Select C/C++ executable project, enter project name and location as shown. ![Create New Project](images\new_project.png)
+4. Click *Next*. Select **Target processor**. Enter settings as shown. e.g.(*nRF52840_xxAA*). Click *Next*.![Select Processor](images\project_set.png)
+5. Uncheck all folders. We will include them from SDK directly. Uncheck *Import all files and package files*.![File and package Import](images\addInitFiles.png)
 6. Click *Next* and then *Finish*.
 
 ### Configure project to be used with nRF5 V 15.3.0 SDK
-1. Right click on project from *Project Explorer*. Select *Open Solution in Editor*.![Environment variable](images\sdkSources.png)
-2. Add code below using *<folder></folder>* tag as shown after *<configuration />* to get stared faster OR can be added manually.
+1. Right click on project from *Project Explorer*. Select *Open Solution in Editor*.![Modify Solution Editor](images\sdkSources.png)
+2. Add code below using *<folder></folder>* tag as shown after *<configuration />* to get stared faster OR can be added manually.<br>
     `<folder Name="System Files">
       <file file_name="$(NRF52_SDK)/modules/nrfx/mdk/ses_startup_nrf_common.s" />
       <file file_name="$(NRF52_SDK)/modules/nrfx/mdk/ses_startup_nrf52840.s" />
