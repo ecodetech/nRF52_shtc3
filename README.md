@@ -25,7 +25,8 @@
 ### Configure project to be used with nRF5 V 15.3.0 SDK
 1. Right click on project from *Project Explorer*. Select *Open Solution in Editor*.![Modify Solution Editor](images/sdkSources.png)
 2. Add code below using *<folder></folder>* tag as shown after *<configuration />* to get stared faster OR can be added manually.<br>
-    `<folder Name="System Files">
+    ```
+    <folder Name="System Files">
       <file file_name="$(NRF52_SDK)/modules/nrfx/mdk/ses_startup_nrf_common.s" />
       <file file_name="$(NRF52_SDK)/modules/nrfx/mdk/ses_startup_nrf52840.s" />
       <file file_name="$(NRF52_SDK)/modules/nrfx/mdk/system_nrf52840.c" />
@@ -72,7 +73,8 @@
     </folder>
     <folder Name="Segger Startup file">
       <file file_name="$(StudioDir)/source/thumb_crt0.s" />
-    </folder>`
+    </folder>
+    ```
     ![Adding SDK source files](images/solutionEdit.png)
 3. Now all required driver source files are added to this project. Now you should source file *main.c* in project.
 4. Add *sdk_config.h* and edit as per requirement. Sample can be found in *SDK->config->* **Processor** *->config*.
@@ -85,25 +87,31 @@
     ![Build Setup](images/buildCfg.png)
     4. Select **Compiler**, set compiler option to _gcc_.![Configure Compiler](images/compilerConf.png)
     5. Select **Linker**, set *Linker* to _GNU_. Set *Section Placement Macros* with
-      `FLASH_PH_START=0x0
+      ```
+      FLASH_PH_START=0x0
       FLASH_PH_SIZE=0x100000
       RAM_PH_START=0x20000000
       RAM_PH_SIZE=0x40000
       FLASH_START=0x0
       FLASH_SIZE=0x100000
       RAM_START=0x20000000
-      RAM_SIZE=0x40000` [Linker Config](images/linkerCfg.png)
+      RAM_SIZE=0x40000
+      ```
+      [Linker Config](images/linkerCfg.png)
     6. Select **Preprocessor**.[Adding Preprocessor](images/preprocessorCfg.png)
         1. Enter *Preprocessor Definitions* with
-          `BOARD_PCA10056
+          ```
+          BOARD_PCA10056
           BSP_DEFINES_ONLY
           CONFIG_GPIO_AS_PINRESET
           FLOAT_ABI_HARD
           INITIALIZE_USER_SECTIONS
           NO_VTOR_CONFIG
-          NRF52840_XXAA`
+          NRF52840_XXAA
+          ```
         2. Set **User Include Directories** with
-          `$(ProjectDir)/config
+          ```
+          $(ProjectDir)/config
           $(NRF52_SDK)/components
           $(NRF52_SDK)/components/boards
           $(NRF52_SDK)/components/drivers_nrf/nrf_soc_nosd
@@ -127,8 +135,9 @@
           $(NRF52_SDK)/modules/nrfx/drivers/include
           $(NRF52_SDK)/modules/nrfx/hal
           $(NRF52_SDK)/modules/nrfx/mdk
-          ./config`
+          ./config
+          ```
 8. *Debug > Simulator > Memory Simulation Parameter* to `RWX 00000000,00100000,FFFFFFFF;RWX 20000000,00010000,CDCDCDCD`.
 9. *Debug > Target Script > Reset Script* to `TargetInterface.resetAndStop()`. *Debug > Target Script > Target Script File* -> Empty.
-11. *Debug > Target Trace > Trace Initialize Script*
-12. Click **OK** to save settings.
+10. *Debug > Target Trace > Trace Initialize Script*
+11. Click **OK** to save settings.
