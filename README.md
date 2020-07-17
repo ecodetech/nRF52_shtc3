@@ -17,13 +17,13 @@
 ### Creating nrf5 project
 1. Click on *Create New* project.
 2. If Nordic Semiconductors package is not installed, install it.
-3. Select C/C++ executable project, enter project name and location as shown. ![Create New Project](images\new_project.png)
-4. Click *Next*. Select **Target processor**. Enter settings as shown. e.g.(*nRF52840_xxAA*). Click *Next*.![Select Processor](images\project_set.png)
-5. Uncheck all folders. We will include them from SDK directly. Uncheck *Import all files and package files*.![File and package Import](images\addInitFiles.png)
+3. Select C/C++ executable project, enter project name and location as shown. ![Create New Project](images/new_project.png)
+4. Click *Next*. Select **Target processor**. Enter settings as shown. e.g.(*nRF52840_xxAA*). Click *Next*.![Select Processor](images/project_set.png)
+5. Uncheck all folders. We will include them from SDK directly. Uncheck *Import all files and package files*.![File and package Import](images/addInitFiles.png)
 6. Click *Next* and then *Finish*.
 
 ### Configure project to be used with nRF5 V 15.3.0 SDK
-1. Right click on project from *Project Explorer*. Select *Open Solution in Editor*.![Modify Solution Editor](images\sdkSources.png)
+1. Right click on project from *Project Explorer*. Select *Open Solution in Editor*.![Modify Solution Editor](images/sdkSources.png)
 2. Add code below using *<folder></folder>* tag as shown after *<configuration />* to get stared faster OR can be added manually.<br>
     `<folder Name="System Files">
       <file file_name="$(NRF52_SDK)/modules/nrfx/mdk/ses_startup_nrf_common.s" />
@@ -73,15 +73,17 @@
     <folder Name="Segger Startup file">
       <file file_name="$(StudioDir)/source/thumb_crt0.s" />
     </folder>`
-    ![Environment variable](images\solutionEdit.png)
-3. Now all required driver source files are added to this project. Now you should source file *main.c* in project. Add *sdk_config.h* and edit as per requirement. Sample can be found in *SDK->config->* **Processor** *->config* also copy file *flash_placement.xml* from *SDK->config->* **Processor** *->ses* to project, use it for *section placement*.
-4. In *Project Explorer* right click on project, click on **Options**.![Environment variable](images\configProSDK.png)
-5. Select configuration **Common**.
+    ![Adding SDK source files](images/solutionEdit.png)
+3. Now all required driver source files are added to this project. Now you should source file *main.c* in project.
+4. Add *sdk_config.h* and edit as per requirement. Sample can be found in *SDK->config->* **Processor** *->config*.
+5. Copy file *flash_placement.xml* from *SDK->config>* **Processor** *->ses* to project, use it for *section placement*.
+6. In *Project Explorer* right click on project, click on **Options**.![Edit Project Settings](images/configProSDK.png)
+7. Select configuration **Common**.
   1. Under **Code** select **Build**.
   2. Enter *Memory Segment* -> `FLASH RX 0x0 0x100000;RAM RWX 0x20000000 0x40000`.
   3. Enter *Project Macros* -> `CMSIS_CONFIG_TOOL=$(NRF52_SDK)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar`.
-    ![Environment variable](images\buildCfg.png)
-  4. Select **Compiler**, set compiler option to _gcc_.![Environment variable](images\compilerConf.png)
+    ![Build Setup](images/buildCfg.png)
+  4. Select **Compiler**, set compiler option to _gcc_.![Configure Compiler](images/compilerConf.png)
   5. Select **Linker**, set *Linker* to _GNU_. Set *Section Placement Macros* with
   `FLASH_PH_START=0x0
    FLASH_PH_SIZE=0x100000
@@ -90,8 +92,8 @@
    FLASH_START=0x0
    FLASH_SIZE=0x100000
    RAM_START=0x20000000
-   RAM_SIZE=0x40000` [Environment variable](images\linkerCfg.png)
-   6. Select **Preprocessor**.[Environment variable](images\preprocessorCfg.png)
+   RAM_SIZE=0x40000` [Linker Config](images/linkerCfg.png)
+  6. Select **Preprocessor**.[Adding Preprocessor](images/preprocessorCfg.png)
     1. Enter *Preprocessor Definitions* with
         `BOARD_PCA10056
          BSP_DEFINES_ONLY
@@ -126,6 +128,7 @@
         $(NRF52_SDK)/modules/nrfx/hal
         $(NRF52_SDK)/modules/nrfx/mdk
         ./config`
-  7. *Debug > Simulator > Memory Simulation Parameter* to `RWX 00000000,00100000,FFFFFFFF;RWX 20000000,00010000,CDCDCDCD`.
-  8. *Debug > Target Script > Reset Script* to `TargetInterface.resetAndStop()`. *Debug > Target Script > Target Script File* -> Empty.
-  9. *Debug > Target Trace > Trace Initialize Script*
+8. *Debug > Simulator > Memory Simulation Parameter* to `RWX 00000000,00100000,FFFFFFFF;RWX 20000000,00010000,CDCDCDCD`.
+9. *Debug > Target Script > Reset Script* to `TargetInterface.resetAndStop()`. *Debug > Target Script > Target Script File* -> Empty.
+11. *Debug > Target Trace > Trace Initialize Script*
+12. Click **OK** to save settings.
