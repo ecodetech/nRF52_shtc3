@@ -97,8 +97,9 @@
       RAM_START=0x20000000
       RAM_SIZE=0x40000
       ```
-      [Linker Config](images/linkerCfg.png)
-    6. Select **Preprocessor**.[Adding Preprocessor](images/preprocessorCfg.png)
+      ![Linker Config](images/linkerCfg.png)
+
+    6. Select **Preprocessor**.![Adding Preprocessor](images/preprocessorCfg.png)
         1. Enter *Preprocessor Definitions* with
           ```
           BOARD_PCA10056
