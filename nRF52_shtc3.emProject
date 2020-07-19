@@ -23,7 +23,7 @@
       arm_target_device_name="nRF52840_xxAA"
       arm_target_interface_type="SWD"
       c_preprocessor_definitions="BOARD_PCA10056 ;BSP_DEFINES_ONLY;CONFIG_GPIO_AS_PINRESET;FLOAT_ABI_HARD;INITIALIZE_USER_SECTIONS;NO_VTOR_CONFIG;NRF52840_XXAA"
-      c_user_include_directories="$(ProjectDir)/config;$(NRF52_SDK)/components;$(NRF52_SDK)/components/boards;$(NRF52_SDK)/components/drivers_nrf/nrf_soc_nosd;$(NRF52_SDK)/components/libraries/atomic;$(NRF52_SDK)/components/libraries/balloc;$(NRF52_SDK)/components/libraries/bsp;$(NRF52_SDK)/components/libraries/delay;$(NRF52_SDK)/components/libraries/experimental_section_vars;$(NRF52_SDK)/components/libraries/log;$(NRF52_SDK)/components/libraries/log/src;$(NRF52_SDK)/components/libraries/memobj;$(NRF52_SDK)/components/libraries/ringbuf;$(NRF52_SDK)/components/libraries/strerror;$(NRF52_SDK)/components/libraries/util;$(NRF52_SDK)/components/toolchain/cmsis/include;$(NRF52_SDK)/external/fprintf;$(NRF52_SDK)/external/segger_rtt;$(NRF52_SDK)/integration/nrfx;$(NRF52_SDK)/integration/nrfx/legacy;$(NRF52_SDK)/modules/nrfx;$(NRF52_SDK)/modules/nrfx/drivers/include;$(NRF52_SDK)/modules/nrfx/hal;$(NRF52_SDK)/modules/nrfx/mdk;./config"
+      c_user_include_directories="$(ProjectDir)/config;$(ProjectDir)/shtc3;$(NRF52_SDK)/components;$(NRF52_SDK)/components/boards;$(NRF52_SDK)/components/drivers_nrf/nrf_soc_nosd;$(NRF52_SDK)/components/libraries/atomic;$(NRF52_SDK)/components/libraries/balloc;$(NRF52_SDK)/components/libraries/bsp;$(NRF52_SDK)/components/libraries/delay;$(NRF52_SDK)/components/libraries/experimental_section_vars;$(NRF52_SDK)/components/libraries/log;$(NRF52_SDK)/components/libraries/log/src;$(NRF52_SDK)/components/libraries/memobj;$(NRF52_SDK)/components/libraries/ringbuf;$(NRF52_SDK)/components/libraries/strerror;$(NRF52_SDK)/components/libraries/util;$(NRF52_SDK)/components/toolchain/cmsis/include;$(NRF52_SDK)/external/fprintf;$(NRF52_SDK)/external/segger_rtt;$(NRF52_SDK)/integration/nrfx;$(NRF52_SDK)/integration/nrfx/legacy;$(NRF52_SDK)/modules/nrfx;$(NRF52_SDK)/modules/nrfx/drivers/include;$(NRF52_SDK)/modules/nrfx/hal;$(NRF52_SDK)/modules/nrfx/mdk;./config"
       debug_register_definition_file="$(ProjectDir)/nrf52840.svd"
       debug_start_from_entry_point_symbol="No"
       debug_target_connection="J-Link"
@@ -47,7 +47,7 @@
     <folder Name="App">
       <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
       <file file_name="main.c" />
-      <file file_name="sdk_config.h" />
+      <file file_name="config/sdk_config.h" />
     </folder>
     <configuration
       Name="Debug"
@@ -104,6 +104,9 @@
     </folder>
     <file file_name="flash_placement.xml" />
     <configuration Name="Release" gcc_optimization_level="Level 2 for size" />
+    <folder Name="shtc3_drv">
+      <file file_name="shtc3/shtc3_drv.c" />
+    </folder>
   </project>
   <configuration
     Name="Debug"

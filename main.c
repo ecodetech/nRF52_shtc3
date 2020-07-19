@@ -59,10 +59,10 @@ Purpose : Generic application start
 #include "nrf_log_ctrl.h"
 #include "nrf_log_default_backends.h"
 
+#include "shtc3_drv.h"
+
 /* TWI instance ID. */
 #define TWI_INSTANCE_ID     0
-
-/* Common addresses definition for temperature sensor. */
 
 
 /* Indicates if operation on TWI has ended. */
@@ -71,8 +71,6 @@ static volatile bool m_xfer_done = false;
 /* TWI instance. */
 static const nrf_drv_twi_t m_twi = NRF_DRV_TWI_INSTANCE(TWI_INSTANCE_ID);
 
-/* Buffer for samples read from temperature sensor. */
-static uint8_t m_sample;
 /**
  * @brief Function for handling data from temperature sensor.
  *
@@ -80,7 +78,8 @@ static uint8_t m_sample;
  */
 __STATIC_INLINE void data_handler(uint8_t temp)
 {
-    NRF_LOG_INFO("Temperature: %d Celsius degrees.", temp);
+   NRF_LOG_INFO("Temperature:  %d deg C.", SHTC3_TempDegC()); // debugging temp and humidity
+   NRF_LOG_INFO("Humidity:  %d %.", SHTC3_RelHumidPercent());
 }
 
 /**
@@ -93,7 +92,7 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
         case NRF_DRV_TWI_EVT_DONE:
             if (p_event->xfer_desc.type == NRF_DRV_TWI_XFER_RX)
             {
-                data_handler(m_sample);
+                data_handler(SHTC3_RawTemp());
             }
             m_xfer_done = true;
             break;
@@ -108,7 +107,7 @@ void twi_init (void)
 {
     ret_code_t err_code;
 
-    const nrf_drv_twi_config_t twi_lm75b_config = {
+    const nrf_drv_twi_config_t twi_shtc3_config = {
        .scl                = ARDUINO_SCL_PIN,
        .sda                = ARDUINO_SDA_PIN,
        .frequency          = NRF_DRV_TWI_FREQ_100K,
@@ -116,25 +115,11 @@ void twi_init (void)
        .clear_bus_init     = false
     };
 
-    err_code = nrf_drv_twi_init(&m_twi, &twi_lm75b_config, twi_handler, NULL);
+    err_code = nrf_drv_twi_init(&m_twi, &twi_shtc3_config, twi_handler, NULL);
     APP_ERROR_CHECK(err_code);
 
     nrf_drv_twi_enable(&m_twi);
 }
-
-
-/**
- * @brief Function for reading data from temperature sensor.
- */
-static void read_sensor_data()
-{
-    m_xfer_done = false;
-
-    /* Read 1 byte from the specified address - skip 3 bits dedicated for fractional part of temperature. */
-    //ret_code_t err_code = nrf_drv_twi_rx(&m_twi, LM75B_ADDR, &m_sample, sizeof(m_sample));
-    //APP_ERROR_CHECK(err_code);
-}
-
 
 /**
  * @brief Function for main application entry.
@@ -146,19 +131,36 @@ int main(void)
 
     NRF_LOG_INFO("\r\nTWI sensor example started.");
     NRF_LOG_FLUSH();
-    twi_init();
-    
+    twi_init(); //START I2C interface 
+    SHTC3_init(&m_twi); //setup instance
+    m_xfer_done = false;
+    SHTC3_Wake(); // wake up sensor
+    while (m_xfer_done == false); //wait till command is processed
+    m_xfer_done = false;
+    SHTC3_setMode(SHTC3_CS_RTF_NP); // enable clock stretching, read temp first in normal power mode
+    while (m_xfer_done == false); 
+    m_xfer_done = false;
+    SHTC3_StartReadPRocess();       // start reading temp and humidity
 
     while (true)
     {
         nrf_delay_ms(500);
-
         do
         {
             __WFE();
         }while (m_xfer_done == false);
 
-  
+    // start read process again
+    m_xfer_done = false;
+    SHTC3_Wake();
+    while (m_xfer_done == false);
+    m_xfer_done = false;
+    SHTC3_setMode(SHTC3_CS_RTF_NP);
+    while (m_xfer_done == false);
+    m_xfer_done = false;
+
+    SHTC3_StartReadPRocess();
+
         NRF_LOG_FLUSH();
     }
 }

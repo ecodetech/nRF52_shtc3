@@ -33,6 +33,7 @@
 "Output/nRF52_shtc3 Debug/Obj/SEGGER_RTT_printf.o"
 "Output/nRF52_shtc3 Debug/Obj/SEGGER_RTT_Syscalls_SES.o"
 "Output/nRF52_shtc3 Debug/Obj/thumb_crt0.o"
+"Output/nRF52_shtc3 Debug/Obj/shtc3_drv.o"
 "C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.52b/lib/libdebugio_mempoll_v7em_fpv4_sp_d16_hard_t_le_eabi.a"
 "C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.52b/lib/libm_v7em_fpv4_sp_d16_hard_t_le_eabi.a"
 "C:/Program Files/SEGGER/SEGGER Embedded Studio for ARM 4.52b/lib/libc_v7em_fpv4_sp_d16_hard_t_le_eabi.a"
