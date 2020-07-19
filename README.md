@@ -23,6 +23,27 @@
 6. Click *Next* and then *Finish*.
 
 ### Configure project to be used with nRF5 V 15.3.0 SDK
+# To add CMSIS tool follow the procedure
+## From link [Adding CMSIS tool](https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.sdk5.v14.1.0%2Fsdk_config.html)
+1. Go to *File -> Open Studio Folder... -> External Tools Configuration*.
+2. The *tools.xml* file will be opened in the editor.
+3. Insert the following text before the *</tools>* tag
+4. Restart the IDE.
+```
+<item name="Tool.CMSIS_Config_Wizard" wait="no">
+    <menu>&amp;CMSIS Configuration Wizard</menu>
+    <text>CMSIS Configuration Wizard</text>
+    <tip>Open a configuration file in CMSIS Configuration Wizard</tip>
+    <key>Ctrl+Y</key>
+    <match>*config*.h</match>
+    <message>CMSIS Config</message>
+    <commands>
+      java -jar &quot;$(CMSIS_CONFIG_TOOL)&quot; &quot;$(InputPath)&quot;
+    </commands>
+</item>
+```
+
+# to go manually
 1. Right click on project from *Project Explorer*. Select *Open Solution in Editor*.![Modify Solution Editor](images/sdkSources.png)
 2. Add code below using *<folder></folder>* tag as shown after *<configuration />* to get stared faster OR can be added manually.<br>
     ```
